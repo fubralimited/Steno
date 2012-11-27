@@ -12,8 +12,6 @@ db     = require './lib/db'
 
 cron   = require('cron').CronJob			# https://github.com/ncb000gt/node-cron
 
-elog 'boom'
-
 # ====================================================
 # 	Schedule cron to send user emails
 # ====================================================
@@ -89,3 +87,4 @@ gCronPattern = "00 #{gTime[0]} #{gTime[1]} * * 2-6"
 
 # Schedule cron
 new cron gCronPattern, sendGroupMail, null, yes
+
