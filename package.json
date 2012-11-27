@@ -1,0 +1,21 @@
+{
+  "name": "Steno",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "deploy": "sudo NODE_ENV=production ./node_modules/forever/bin/forever start -c ./node_modules/coffee-script/bin/coffee steno.coffee",
+    "kill": "sudo ./node_modules/forever/bin/forever stopall",
+    "list": "sudo ./node_modules/forever/bin/forever list"
+  },
+  "dependencies": {
+    "forever": "~0.10.0",
+    "sqlite3": "~2.1.5",
+    "nodemailer": "~0.3.31",
+    "imap": "~0.6.1",
+    "mailparser": "~0.2.31",
+    "cron": "~1.0.1",
+    "jquery": "~1.8.2",
+    "async": "~0.1.22",
+    "moment": "~1.7.2"
+  }
+}
