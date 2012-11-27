@@ -34,8 +34,8 @@ module.exports =
 	# Sets or updates today's message for user
 	set: (email, message) -> # Save incoming message and overwrite if set
 
-		db.run "UPDATE emails SET message='#{message}' WHERE date=date('now') AND email='#{email}'", (err) ->
-
+		db.run "UPDATE emails SET message=? WHERE date=date('now') AND email=?", message, email, (err) ->
+			
 			# Log any errors
 			if err
 				elog err
@@ -45,8 +45,7 @@ module.exports =
 			username = config.users[email]
 
 			# Check Something was updated else INSERT
-			unless @changes then db.run "INSERT INTO emails (user, email, message) VALUES ('#{username}', '#{email}', '#{message}')", (err) ->
-				
+			unless @changes then db.run "INSERT INTO emails (user, email, message) VALUES (?,?,?)", username, email, message, (err) ->
 				# Log any errors
 				elog err if err
 
