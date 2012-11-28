@@ -4,7 +4,7 @@ require './lib/logger'
 
 moment = require 'moment' 					# https://github.com/timrwood/moment
 
-# Dependancies
+# Dependencies
 config = require './config'
 outbox = require './lib/outbox'
 inbox  = require './lib/inbox'
@@ -35,7 +35,7 @@ sendUserMail = ->
 			subject: "#{today} - What have you been up to today?"
 			html: """Hi #{name},<br/>
 				<p>Please reply to this email before #{config.group.time} with a brief summary of what you have been doing today.</p>
-				<span style="color:#999; font-weight: bold;">Remember to end your email with '--END--' if you are not using the standard signiture delimiter, '-- \n'.</span>
+				<span style="color:#999; font-weight: bold;">Remember to end your email with '--END--' if you are not using the standard signature delimiter, '-- \n'.</span>
 				<br/><span style="color:#999; font-weight: bold;">You can update your daily email at any time by simply replying to this email again.</span>
 				<br/><br/><em>-- #{signOff}</em>"""
 
