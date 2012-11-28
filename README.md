@@ -39,8 +39,11 @@ To get started, create a config file *(sample_config.coffee is provided)* in any
 
 To start Steno, simply install dependancies with `npm install` and then run the steno.coffee file with either [Forever](https://github.com/nodejitsu/forever), [Upstart](http://upstart.ubuntu.com/) or similar.
 
-The package.json file includes some standard startup methods:
-- 
+**The package.json file includes some standard startup methods:**
+
+- `npm run-script deploy` to start the app as a daemon with it's own local copy of **Forever** and **CoffeeScript**.
+- `npm run-script list` to check all **Forever** running processes.
+- `npm run-script kill` to stop *ALL* running **Forever** processes.
 	
 Steno will immediattely process and delete any new emails on the selected imap account, so use a dedicated email account.
 
