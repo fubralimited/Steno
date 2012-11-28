@@ -46,7 +46,7 @@ sendUserMail = ->
 uTime = config.reminder.split ':'
 
 # Create cron pattern
-uCronPattern = "00 #{uTime[0]} #{uTime[1]} * * 2-6"
+uCronPattern = "00 #{uTime[1]} #{uTime[0]} * * 2-6"
 
 # Schedule cron
 new cron uCronPattern, sendUserMail, null, yes
@@ -83,7 +83,7 @@ sendGroupMail = ->
 gTime = config.group.time.split ':'
 
 # Create cron pattern
-gCronPattern = "00 #{gTime[0]} #{gTime[1]} * * 2-6"
+gCronPattern = "00 #{gTime[1]} #{gTime[0]} * * 2-6"
 
 # Schedule cron
 new cron gCronPattern, sendGroupMail, null, yes
