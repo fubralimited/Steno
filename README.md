@@ -4,7 +4,7 @@
 
 ---
 
-![steno](lib/img/steno.png)
+![steno](./lib/img/steno.png)
 
 To get started, create a config file *(sample_config.coffee is provided)* in any commonjs module format e.g. JavaScript, JSON, CoffeeScript.
 
