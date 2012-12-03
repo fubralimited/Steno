@@ -12,6 +12,9 @@ db     = require './lib/db'
 
 cron   = require('cron').CronJob			# https://github.com/ncb000gt/node-cron
 
+# Log app started
+elog 'App started'
+
 # ====================================================
 # 	Schedule cron to send user emails
 # ====================================================

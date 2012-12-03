@@ -17,52 +17,63 @@ imap = new ImapConnection
 	host: config.host
 	port: config.port
 
-# Open connection
-imap.connect (err) ->
+# Start listening for connection close
+imap.on 'close', ->
+	elog 'Connection closed'
+	do connect
 
-	# Log and return if error
-	if err then elog err; return
+# Immedittely connect
+do connect = ->
 
-	read = ->
+	# Imap connecting
+	elog 'Connecting'
 
-		# Get undeleted messages
-		imap.search ['UNDELETED'], (err, results) ->
-
-			# Check results were returned
-			return unless results.length
-
-			# Start fetching messages as raw buffer
-			fetch = imap.fetch results, request: body: 'full', headers: no
-
-			# Listen for new message
-			fetch.on 'message', (msg) ->
-
-				# Buffer string
-				msgBuffer = ''
-
-				# Append buffer chunk
-				msg.on 'data', (chunk) -> msgBuffer += chunk
-				
-				# Listen for end of message
-				# Pass buffer to reader and reset buffer string
-				msg.on 'end', ->
-					reeder msgBuffer
-					msgBuffer = ''
-
-			# When all messages have been read close connection
-			fetch.on 'end', ->
-				# Delete messages and close connection once done
-				imap.addFlags results, 'Deleted', (err) ->
-					# Log and return if error
-					if err then elog err
-
-	# Open Inbox
-	imap.openBox 'Inbox', no, (err, mailbox) ->
+	# Open connection
+	imap.connect (err) ->
 
 		# Log and return if error
 		if err then elog err; return
 
-		do read
+		read = ->
 
-		# Start listening for new mail
-		imap.on 'mail', read
+			# Get undeleted messages
+			imap.search ['UNDELETED'], (err, results) ->
+
+				# Check results were returned
+				return unless results.length
+
+				# Start fetching messages as raw buffer
+				fetch = imap.fetch results, request: body: 'full', headers: no
+
+				# Listen for new message
+				fetch.on 'message', (msg) ->
+
+					# Buffer string
+					msgBuffer = ''
+
+					# Append buffer chunk
+					msg.on 'data', (chunk) -> msgBuffer += chunk
+					
+					# Listen for end of message
+					# Pass buffer to reader and reset buffer string
+					msg.on 'end', ->
+						reeder msgBuffer
+						msgBuffer = ''
+
+				# When all messages have been read close connection
+				fetch.on 'end', ->
+					# Delete messages and close connection once done
+					imap.addFlags results, 'Deleted', (err) ->
+						# Log and return if error
+						if err then elog err
+
+		# Open Inbox
+		imap.openBox 'Inbox', no, (err, mailbox) ->
+
+			# Log and return if error
+			if err then elog err; return
+
+			do read
+
+			# Start listening for new mail
+			imap.on 'mail', read
