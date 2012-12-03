@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+// https://github.com/visionmedia/commander.js
+var program = require('commander');
+var pkg = require('../package');
+
+// Process stdin
+
+program
+	.version(pkg.version)
+	.usage('[command] <args>');
+
+program
+	.command('new')
+	.action()
+	.option('-p, --option', 'Option')
+	.parse(process.argv);
+
+
+

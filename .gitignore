@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
-*.sqlite
+steno/database/
 *.log
-config.coffee
+config/*
+!config/sample_*

@@ -1,0 +1,20 @@
+{
+	"users": {
+
+		"user1@example.com" : "User1",
+		"user2@example.com" : "User2",
+		"user3@example.com" : "User3"
+
+	},
+
+	"reminder": "14:00",
+
+	"group": {
+
+		"name": "Example Group",
+		"email": "group@example.com",
+		"daily": "16:20"
+
+	},
+
+}

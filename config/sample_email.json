@@ -1,0 +1,8 @@
+{
+	"provider": "Gmail",
+	"email": "steno_group@gmail.com",
+	"password": "gmail_password",
+	"host": "imap.gmail.com",
+	"secure": 1,
+	"port": 993
+}
