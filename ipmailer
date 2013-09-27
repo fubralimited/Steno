@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Email ifconfig to user on reboot.
+# Added by Ray Viljoen to avoid having to connect a monitor everytime the dhcp lease runs out.
+touch _maildoc.txt
+echo "From: galagy@fubra.com" >> _maildoc.txt;
+echo "To: ray@fubra.com"  >> _maildoc.txt;
+echo "Subject: Galaxy IP Address Update"  >> _maildoc.txt;
+echo  >> _maildoc.txt;
+echo "Computer's IP Changed. The new IP is:"  >> _maildoc.txt;
+ifconfig >> _maildoc.txt;
+cat _maildoc.txt | sendmail -f galaxy@fubra.com ray@fubra.com
+rm _maildoc.txt

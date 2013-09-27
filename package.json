@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "deploy": "sudo NODE_ENV=production ./node_modules/forever/bin/forever start -c ./node_modules/coffee-script/bin/coffee steno.coffee",
-    "kill": "sudo ./node_modules/forever/bin/forever stopall",
-    "list": "sudo ./node_modules/forever/bin/forever list"
+    "start": "./node_modules/forever/bin/forever start -c ./node_modules/coffee-script/bin/coffee steno.coffee",
+    "stop": "./node_modules/forever/bin/forever stop steno.coffee",
+    "list": "./node_modules/forever/bin/forever list"
   },
   "dependencies": {
     "forever": "~0.10.0",
