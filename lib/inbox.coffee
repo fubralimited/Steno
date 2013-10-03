@@ -7,34 +7,30 @@ config = require '../config'
 reeder = require './reader'
 db     = require './db'
 
-ImapConnection = require('imap').ImapConnection		# https://github.com/mscdex/node-imap
+refreshRate = 5 # Interval of minutes to refresh
+
+Imap = require 'imap'		# https://github.com/mscdex/node-imap
 
 # Configure new iMap connection
-imap = new ImapConnection
-	username: config.email
+imap = new Imap
+	user: config.email
 	password: config.password
-	secure: config.secure
+	tls: config.secure
 	host: config.host
 	port: config.port
+	tlsOptions: { rejectUnauthorized: no }
 
-# Start listening for connection close
-imap.on 'close', ->
-	elog 'Connection closed'
-	do connect
+connect = ->
 
-# Immedittely connect
-do connect = ->
+	do imap.connect
 
-	# Imap connecting
-	elog 'Connecting'
+	imap.once 'ready', ->
+		
+		# Open Inbox
+		imap.openBox 'Inbox', no, (err, mailbox) ->
 
-	# Open connection
-	imap.connect (err) ->
-
-		# Log and return if error
-		if err then elog err; return
-
-		read = ->
+			# Log and return if error
+			if err then elog err; return
 
 			# Get undeleted messages
 			imap.search ['UNDELETED'], (err, results) ->
@@ -43,7 +39,7 @@ do connect = ->
 				return unless results.length
 
 				# Start fetching messages as raw buffer
-				fetch = imap.fetch results, request: body: 'full', headers: no
+				fetch = imap.fetch results, { bodies: '' }
 
 				# Listen for new message
 				fetch.on 'message', (msg) ->
@@ -52,28 +48,33 @@ do connect = ->
 					msgBuffer = ''
 
 					# Append buffer chunk
-					msg.on 'data', (chunk) -> msgBuffer += chunk
+					msg.on 'body', (stream) ->
+
+						stream.on 'data', (chunk) -> msgBuffer += chunk
 					
 					# Listen for end of message
 					# Pass buffer to reader and reset buffer string
-					msg.on 'end', ->
+					msg.once 'end', ->
 						reeder msgBuffer
 						msgBuffer = ''
 
 				# When all messages have been read close connection
-				fetch.on 'end', ->
+				fetch.once 'end', ->
 					# Delete messages and close connection once done
 					imap.addFlags results, 'Deleted', (err) ->
 						# Log and return if error
 						if err then elog err
+						do imap.end
 
-		# Open Inbox
-		imap.openBox 'Inbox', no, (err, mailbox) ->
 
-			# Log and return if error
-			if err then elog err; return
+imap.once 'error', (err) ->
+  console.log err
 
-			do read
+imap.once 'end', ->
+  console.log 'Connection ended'
 
-			# Start listening for new mail
-			imap.on 'mail', read
+# Get inbox once
+do connect
+
+# Create timer to read messages every 5 minutes
+setInterval connect, ( 60000 * refreshRate )

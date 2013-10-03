@@ -8,15 +8,15 @@
     "list": "./node_modules/forever/bin/forever list"
   },
   "dependencies": {
-    "forever": "~0.10.0",
-    "sqlite3": "~2.1.5",
-    "nodemailer": "~0.3.31",
-    "imap": "~0.6.1",
-    "mailparser": "~0.2.31",
-    "cron": "~1.0.1",
-    "jquery": "~1.8.2",
-    "async": "~0.1.22",
-    "moment": "~1.7.2",
-    "coffee-script": "~1.4.0"
+    "forever": ">= 0.10.0",
+    "sqlite3": ">= 2.1.5",
+    "nodemailer": ">= 0.3.31",
+    "imap": ">= 0.6.1",
+    "mailparser": ">= 0.2.31",
+    "cron": ">= 1.0.1",
+    "jquery": ">= 1.8.2",
+    "async": ">= 0.1.22",
+    "moment": ">= 1.7.2",
+    "coffee-script": ">= 1.4.0"
   }
 }

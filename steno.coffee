@@ -71,7 +71,7 @@ sendGroupMail = ->
 		body = ''
 
 		# Build email body
-		body += "<h3 style='margin:5px 0px;'>#{msg.user}</h3><p>#{msg.message}</p><br/>" for msg in daily
+		body += "<p><h3 style='margin:5px 0px;'>#{msg.user}</h3>#{msg.message}</p>" for msg in daily
 
 		# Build email
 		groupEmail =
@@ -85,8 +85,9 @@ sendGroupMail = ->
 # Get minutes & hours from time obj
 gTime = config.group.time.split ':'
 
-# Create cron pattern
-gCronPattern = "00 #{gTime[1]} #{gTime[0]} * * 1-5"
+# Create cron pattern adding 5 minute to ensure latest emails is reteived
+gCronPatternMinute = parseInt(gTime[1], 10) + 5
+gCronPattern = "00 #{gCronPatternMinute} #{gTime[0]} * * 1-5"
 
 # Schedule cron
 new cron gCronPattern, sendGroupMail, null, yes
