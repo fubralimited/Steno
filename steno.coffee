@@ -38,7 +38,7 @@ sendUserMail = ->
 			subject: "#{today} - What have you been up to today?"
 			html: """Hi #{name},<br/>
 				<p>Please reply to this email before #{config.group.time} with a brief summary of what you have been doing today.</p>
-				<span style="color:#999; font-weight: bold;">Remember to end your email with '--END--' if you are not using the standard signature delimiter, '-- \n'. Alternatively, remove your email signature before replying.</span>
+				<span style="color:#999; font-weight: bold;">Remember to end your email with '--END--' if you are not using the standard signature delimiter, '-- \n'.<br/>Alternatively, remove your email signature before replying.</span>
 				<br/><span style="color:#999; font-weight: bold;">You can update your daily email at any time by simply replying to this email again.</span>
 				<br/><br/><em>-- #{signOff}</em>"""
 

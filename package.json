@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "./node_modules/forever/bin/forever start -c ./node_modules/coffee-script/bin/coffee steno.coffee",
+    "start": "./node_modules/forever/bin/forever start -o stdout.log -e stderr.log index.js",
     "stop": "./node_modules/forever/bin/forever stop steno.coffee",
     "list": "./node_modules/forever/bin/forever list"
   },
