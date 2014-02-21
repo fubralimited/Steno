@@ -22,8 +22,7 @@ tableStructure = """
 
 # Execute create table and log if error
 db.run tableStructure, (err) ->
-    console.log 'Database ready'
-    elog err if err
+    console.log err if err
 
 # ====================================================
 #   Export db getter/setter
@@ -38,7 +37,7 @@ module.exports =
             
             # Log any errors
             if err
-                elog err
+                console.log err
                 return
 
             # Get usrname
@@ -47,7 +46,7 @@ module.exports =
             # Check Something was updated else INSERT
             unless @changes then db.run "INSERT INTO emails (user, email, message) VALUES (?,?,?)", username, email, message, (err) ->
                 # Log any errors
-                elog err if err
+                console.log err if err
 
     # Simply gets all rows for today
     get: (callback) -> # Get Saved message of the day only else null
@@ -55,7 +54,7 @@ module.exports =
         db.all "SELECT * FROM emails WHERE date=date('now')", (err, rows) ->
 
             # Log any errors
-            elog err if err
+            console.log err if err
 
             # Pass rows to callback
             callback err, rows
