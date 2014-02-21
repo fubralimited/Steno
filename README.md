@@ -4,7 +4,23 @@
 
 ---
 
-![steno](https://raw.github.com/fubralimited/Steno/master/lib/img/steno.png)
+
+#####Removed all js crons in favour of simply setting more reliable crontab entries.
+
+Set inbox to be cleared every 15min
+
+	*/15 * * * * coffee /Steno/lib/inbox.coffee >> /Steno/cron.log
+
+Send daily group email at 17:05 every weekday (05 to ensure 17:00 the inbox will cleared)
+
+	5 17 * * 1-5 coffee /Steno/lib/sendgroup.coffee >> /Steno/cron.log
+
+Send individual email reminders at 14:30 every weekday
+
+	0 14 * * 1-5 coffee /Steno/lib/senduser.coffee >> /Steno/cron.log
+
+
+---
 
 To get started, create a config file *(sample_config.coffee is provided)* in any commonjs module format e.g. JavaScript, JSON, CoffeeScript.
 
