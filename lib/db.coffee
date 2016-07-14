@@ -8,7 +8,7 @@ sqlite3 = require 'sqlite3'     # https://github.com/developmentseed/node-sqlite
 # ====================================================
 
 # Open database and create table if not set
-db = new sqlite3.Database 'database.sqlite'
+db = new sqlite3.Database './database.sqlite'
 
 # Create table structure
 tableStructure = """
@@ -34,7 +34,7 @@ module.exports =
     set: (email, message) -> # Save incoming message and overwrite if set
 
         db.run "UPDATE emails SET message=? WHERE date=date('now') AND email=?", message, email, (err) ->
-            
+
             # Log any errors
             if err
                 console.log err

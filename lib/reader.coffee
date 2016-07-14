@@ -6,14 +6,16 @@
 config = require '../config'
 
 MailParser = require('mailparser').MailParser 	# https://github.com/andris9/mailparser
-jquery = require 'jquery'						# https://github.com/coolaj86/node-jquery
+
+# jQuery for the server
+cheerio = require 'cheerio'
 
 # Get database object
 db = require './db'
 
 # Factory parser
 module.exports = (raw) ->
-	
+
 	# New parse instance
 	mailparser = new MailParser()
 
@@ -30,14 +32,14 @@ module.exports = (raw) ->
 
 		# Check message is from a valid user
 		unless config.users[sender]
-			elog "Invalid user: #{sender}"
+			console.log("Invalid user: #{sender}")
 			return
 
 		# Get html or text from parsed email
 		rawMsg = email.html or email.text
 
-		# Wrap content in div as makes it safe html for jQuery to process then strip html
-		message = do jquery("<div>#{rawMsg}</div>").text
+		# Strip html
+		message = cheerio.load(rawMsg)('div').text()
 
 		# Split at delimiters
 		message = (message.split '--END--')[0]
@@ -48,4 +50,3 @@ module.exports = (raw) ->
 
 		# Save message
 		db.set sender, message
-		

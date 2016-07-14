@@ -41,12 +41,12 @@ module.exports = (emails) ->
 	# Send single email if not array
 	unless emails instanceof Array then send emails, (err) ->
 			# Log error if exists else close transport
-			if err then elog err else do transport.close
+			if err then console.log(err) else do transport.close
 
 	# Else send each email in parallel and close tranport when done
 	else async.forEach emails, send, (err) ->
 			# Log error if exists else close transport
-			if err then elog err else do transport.close
+			if err then console.log(err) else do transport.close
 		
 		
 
